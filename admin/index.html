@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Multi-File CMS</title>
+<title>Live CMS</title>
 <style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; }
-  #sidebar { width: 200px; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
+  body { font-family: Arial, sans-serif; margin: 0; display: flex; height: 100vh; }
+  #sidebar { width: 220px; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
   #file-list { flex: 1; overflow-y: auto; }
   #file-list button { width: 100%; padding: 8px; border: none; background: #f0f0f0; cursor: pointer; text-align: left; }
   #file-list button:hover { background: #ddd; }
   #editor-container { flex: 1; display: flex; flex-direction: column; }
   #editor { flex: 1; width: 100%; font-family: monospace; font-size: 14px; padding: 10px; border: none; resize: none; }
   #deploy { padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; font-size: 16px; }
-  #preview-container { flex: 1; border: none; }
   iframe { width: 100%; height: 50%; border: none; }
 </style>
 </head>
@@ -30,24 +29,33 @@
   <iframe id="preview"></iframe>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown support -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
 // ===== CONFIG =====
 const GITHUB_OWNER = 'DawidPersonal';
 const GITHUB_REPO = 'domain';
 const BRANCH = 'main';
-let FILE_PATH = 'index.html'; // default file
+let FILE_PATH = 'index.html'; // root file
 const GITHUB_TOKEN = prompt("Enter your GitHub personal access token:");
 
-// DOM elements
+// DOM
 const editor = document.getElementById('editor');
 const preview = document.getElementById('preview');
 const fileListContainer = document.getElementById('file-list');
 
-// ===== HELPER FUNCTIONS =====
+// ===== AUDIO =====
+const songs = [
+  { title: "21st Century Humour but it's a rave song", url: "centuryhumor.wav" },
+  { title: "DRIVING IN MY CARR", url: "https://dawidpersonal.pl/asgore-driving-home.mp3" },
+  { title: "TheFatRat - Unity [NCS Release]", url: "unity.mp3" },
+  { title: "Noisestrom - Crab Rave [NCS Release]", url: "original_zeowGW1.mp3" },
+  { title: "Doom Music", url: "doom.mp3" },
+  { title: "Tutorial Music Meme", url: "tutorial-music-meme.mp3" },
+  { title: "It's Raining Tacos", url: "tacos.mp3" }
+];
 
-// Update live preview
+// ===== FUNCTIONS =====
 function updatePreview() {
     if(FILE_PATH.endsWith('.md')) {
         preview.srcdoc = marked.parse(editor.value);
@@ -58,7 +66,6 @@ function updatePreview() {
 
 editor.addEventListener('input', updatePreview);
 
-// Load a file from GitHub
 async function loadFile(path) {
     FILE_PATH = path;
     try {
@@ -78,8 +85,7 @@ async function loadFile(path) {
     }
 }
 
-// List files from a folder in GitHub repo
-async function listFiles(path = 'dist') {
+async function listFiles(path = '') {
     try {
         const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${BRANCH}`);
         const files = await response.json();
@@ -94,35 +100,33 @@ async function listFiles(path = 'dist') {
         const editableFiles = files.filter(file => file.type === 'file' && (file.name.endsWith('.html') || file.name.endsWith('.md')));
 
         if (editableFiles.length === 0) {
-            alert('No editable files found in the folder.');
+            alert('No editable files found in the repo.');
             return;
         }
 
         editableFiles.forEach(file => {
             const btn = document.createElement('button');
             btn.textContent = file.name;
-            btn.onclick = () => loadFile(`${path}/${file.name}`);
+            btn.onclick = () => loadFile(`${file.name}`);
             fileListContainer.appendChild(btn);
         });
 
-        loadFile(`${path}/${editableFiles[0].name}`); // load first file
+        loadFile(editableFiles[0].name);
     } catch (err) {
         console.error('Error listing files:', err);
         alert('Failed to list files. Check console.');
     }
 }
 
-// Deploy updated file to GitHub
+// ===== DEPLOY =====
 document.getElementById('deploy').addEventListener('click', async () => {
     try {
-        // Get SHA of current file
         const getResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${BRANCH}`, {
             headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
         });
         const existingFile = await getResp.json();
         const sha = existingFile.sha;
 
-        // Push changes
         const putResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
             method: 'PUT',
             headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
@@ -148,7 +152,7 @@ document.getElementById('deploy').addEventListener('click', async () => {
 });
 
 // ===== INIT =====
-listFiles(''); // adjust folder if needed
+listFiles('');
 </script>
 
 </body>
