@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dawid Personal – Portfolio</title>
+<title>Dawid Personal – Profesjonalne Portfolio Web Development</title>
+<meta name="description" content="Dawid Personal – Profesjonalne portfolio web development. Tworzenie nowoczesnych, responsywnych stron internetowych, aplikacji webowych i kompleksowych usług IT.">
+<meta name="keywords" content="web development, portfolio, strony internetowe, aplikacje webowe, JavaScript, React, HTML, CSS, Electron, UX/UI, usługi IT">
+<meta name="author" content="Dawid Personal">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://dawidpersonal.pl/">
+
 <style>
 /* ===== Reset & Base ===== */
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -26,6 +32,13 @@ nav a:hover { color:#FF6584; }
 #about .avatar { flex:1; text-align:center; }
 #about .avatar img { width:250px; border-radius:50%; border:5px solid #6C63FF; transition: transform 0.3s; }
 #about .avatar img:hover { transform: rotate(10deg) scale(1.05); }
+
+/* ===== Usługi ===== */
+#services { background:#fff; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
+#services h2 { text-align:center; color:#6C63FF; margin-bottom:50px; }
+.service-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
+.service-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; padding:20px; }
+.service-card:hover { transform: translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
 
 /* ===== Projekty ===== */
 #projects { background:#fff; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
@@ -60,6 +73,7 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
   <div class="logo">DawidPersonal</div>
   <nav>
     <a href="#about">O mnie</a>
+    <a href="#services">Usługi</a>
     <a href="#projects">Projekty</a>
     <a href="#contact">Kontakt</a>
   </nav>
@@ -68,10 +82,28 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
 <section id="about">
   <div class="text fade-in">
     <h1>Cześć, jestem Dawid!</h1>
-    <p>Lubię tworzyć strony internetowe, gry i ciekawe projekty. Łączę kreatywność z technologią, starając się aby każdy projekt był wyjątkowy i pełen życia. Moje ulubione technologie to JavaScript, HTML, CSS, React, Electron i wiele innych.</p>
+    <p>Tworzę nowoczesne i w pełni responsywne strony internetowe oraz aplikacje webowe, łącząc najnowsze technologie z doświadczeniem w projektowaniu UX/UI. Moje projekty są zoptymalizowane pod kątem wydajności, bezpieczeństwa oraz pełnej funkcjonalności biznesowej. Technologie, które wykorzystuję, to m.in. JavaScript, React, HTML, CSS, Electron oraz narzędzia backendowe.</p>
   </div>
   <div class="avatar fade-in">
-    <img src="https://www.bing.com/th/id/OIP.lyBt9ihXGXuv5JwJpbmJQwHaGy?w=218&h=211&c=8&rs=1&qlt=70&o=7&cb=thws5&dpr=1.3&pid=3.1&rm=3" alt="Avatar Dawida">
+    <img src="https://www.bing.com/th/id/OIP.lyBt9ihXGXuv5JwJpbmJQwHaGy?w=218&h=211&c=8&rs=1&qlt=70&o=7&cb=thws5&dpr=1.3&pid=3.1&rm=3" alt="Zdjęcie Dawida – profesjonalny web developer">
+  </div>
+</section>
+
+<section id="services">
+  <h2>Moje Usługi</h2>
+  <div class="service-grid">
+    <div class="service-card fade-in">
+      <h3>Tworzenie stron WWW</h3>
+      <p>Nowoczesne, responsywne i zoptymalizowane strony internetowe dopasowane do potrzeb klienta i celów biznesowych.</p>
+    </div>
+    <div class="service-card fade-in">
+      <h3>Aplikacje Webowe</h3>
+      <p>Kompleksowe aplikacje biznesowe z pełną funkcjonalnością frontend i backend, optymalizacją i bezpieczeństwem.</p>
+    </div>
+    <div class="service-card fade-in">
+      <h3>Optymalizacja i SEO</h3>
+      <p>Zwiększenie wydajności, optymalizacja SEO i implementacja najlepszych praktyk bezpieczeństwa dla stron i aplikacji.</p>
+    </div>
   </div>
 </section>
 
@@ -79,39 +111,25 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
   <h2>Moje Projekty</h2>
   <div class="project-grid">
     <div class="project-card fade-in">
-      <img src="https://picsum.photos/300/150?2" alt="Projekt 2">
+      <img src="https://picsum.photos/300/150?2" alt="Projekt gry Wąż – demonstracja umiejętności web development">
       <div class="content">
         <h3>Gra Wąż</h3>
-        <p>Prosta gra online stworzona w JavaScript, z interaktywnymi elementami.</p>
+        <p>Projekt demonstracyjny pokazujący interaktywność, optymalizację i nowoczesny frontend w JavaScript.</p>
         <a href="content/projects/snake.html" target="_blank">Zagraj teraz!</a>
       </div>
     </div>
+   
     <div class="project-card fade-in">
-      <img src="https://picsum.photos/300/150?3" alt="Projekt 3">
-      <div class="content">
-        <h3>DawidMC</h3>
-        <p>Serwer Minecraft w pracach</p>
-        <a href="content/projects/dawidmc.html" target="_blank">Zobacz więcej</a>
-      </div>
-    </div>
-    <div class="project-card fade-in">
-      <img src="https://picsum.photos/300/150?4" alt="Projekt 3">
-      <div class="content">
-        <h3>Globe Weather</h3>
-        <p>Prosta prognoza pogody w HTML, CSS i JS.</p>
-        <a href="content/projects/globeweather.html" target="_blank">Odwiedź</a>
-      </div>
-    </div>
-    <div class="project-card fade-in">
-      <img src="https://picsum.photos/300/150?5" alt="Projekt 3">
+      <img src="https://picsum.photos/300/150?5" alt="Formularz zgłoszeniowy – profesjonalna oferta usług webowych">
       <div class="content">
         <h3>Zgłoszenie</h3>
-        <p>Tutaj możesz się zgłosić o stworzenie strony internetowej.</p>
+        <p>Tutaj możesz zgłosić projekt strony internetowej lub aplikacji – pełna obsługa projektowa.</p>
         <a href="zgloszenie.html" target="_blank">Zgłoś się</a>
       </div>
     </div>
   </div>
 </section>
+
 
 
 <footer>
