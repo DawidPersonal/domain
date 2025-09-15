@@ -1,14 +1,18 @@
 # /admin/config.yml
 backend:
-  name: git-gateway          # Uses GitHub repository as backend
+  name: github               # Use GitHub as backend
+  repo: DawidPersonal/domain # Your GitHub repository
   branch: main               # Branch to save content
+  auth_type: "token"         # Use a personal access token for login
   commit_messages:
     create: "Create {{collection}} '{{slug}}'"
     update: "Update {{collection}} '{{slug}}'"
     delete: "Delete {{collection}} '{{slug}}'"
     uploadMedia: "Upload '{{path}}'"
     deleteMedia: "Delete '{{path}}'"
-publish_mode: simple         # simple or editorial_workflow
+publish_mode: simple          # simple or editorial_workflow
+
+
 
 media_folder: "static/images/uploads"   # Where uploaded files are stored in repo
 public_folder: "/images/uploads"        # How files are accessed in the site
