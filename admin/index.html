@@ -37,7 +37,7 @@
 const GITHUB_OWNER = 'DawidPersonal';
 const GITHUB_REPO = 'domain';
 const BRANCH = 'main';
-let FILE_PATH = 'dist/index.html'; // default file
+let FILE_PATH = 'index.html'; // default file
 const GITHUB_TOKEN = prompt("Enter your GitHub personal access token:");
 
 // DOM elements
@@ -148,7 +148,7 @@ document.getElementById('deploy').addEventListener('click', async () => {
 });
 
 // ===== INIT =====
-listFiles('dist'); // adjust folder if needed
+listFiles(''); // adjust folder if needed
 </script>
 
 </body>
