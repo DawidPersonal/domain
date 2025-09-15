@@ -3,219 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dawid Personal – Projekty, Gry i Kreatywne Pomysły</title>
-<meta name="description" content="Dawid Personal – Strona z projektami, grami online i kreatywnymi pomysłami. Zobacz moje projekty, gry i dodatkowe materiały multimedialne.">
-<meta name="keywords" content="Dawid Personal, projekty online, gry, HTML, web development, kreatywne pomysły">
-<meta name="author" content="Dawid">
-<meta property="og:title" content="Dawid Personal – Projekty i Gry Online">
-<meta property="og:description" content="Sprawdź moje projekty, gry online i kreatywne pomysły na stronie Dawid Personal.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://dawidpersonal.pl/">
-<meta property="og:image" content="https://dawidpersonal.pl/zinc.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Dawid Personal – Projekty i Gry Online">
-<meta name="twitter:description" content="Odwiedź Dawid Personal – projekty online, gry, multimedia i kreatywne pomysły.">
-<meta name="twitter:image" content="https://dawidpersonal.pl/zinc.png">
-<link rel="canonical" href="https://dawidpersonal.pl/">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+<title>Dawid Personal – Portfolio</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Poppins', sans-serif; background: #fafafa; color: #222; line-height: 1.7; transition: background 0.3s, color 0.3s; }
-a { color: #1e90ff; text-decoration: none; transition: color 0.3s; }
-a:hover { color: #0a64c7; }
-header { background: linear-gradient(135deg, #ff6a00, #ee0979); color: #fff; text-align: center; padding: 50px 20px; border-radius: 0 0 40px 40px; position: relative; }
-header h1 { font-size: 36px; margin-bottom: 15px; font-weight: 700; }
-.toggle-container { position: absolute; top: 25px; right: 25px; }
-.toggle-label { display: flex; align-items: center; cursor: pointer; font-size: 20px; }
-.toggle-label input { display: none; }
-#mode-icon { margin-left: 10px; transition: transform 0.3s; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
-main { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-section { background: #fff; padding: 30px 35px; margin-bottom: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: background 0.3s, color 0.3s; }
-section h2 { font-size: 26px; margin-bottom: 20px; color: #ff6a00; }
-details.project summary { cursor: pointer; font-weight: 600; margin-bottom: 10px; font-size: 18px; }
-details.project p { margin: 8px 0; }
-#random-song { text-align: center; }
-#random-song .song-title { font-weight: 600; font-size: 20px; margin-bottom: 15px; color: #333; }
-#random-song audio { width: 100%; border-radius: 8px; outline: none; }
-footer { text-align: center; padding: 25px 10px; font-size: 14px; color: #666; transition: color 0.3s; }
-.noscript-warning { background: #ffdddd; color: #900; padding: 15px; border-radius: 12px; margin: 20px 0; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; }
-body.dark { background: #1e1e1e; color: #ddd; }
-body.dark header { background: linear-gradient(135deg, #222, #444); }
-body.dark section { background: #2a2a2a; color: #ddd; }
-body.dark section h2 { color: #ff8a50; }
-body.dark footer { color: #aaa; }
-body.dark a { color: #4fa3ff; }
-@media(max-width: 600px){ header h1{ font-size: 28px; } section{ padding: 20px 20px; } }
+/* ===== Reset & Base ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Roboto', sans-serif; background:#f4f4f9; color:#333; scroll-behavior: smooth; }
+a { text-decoration:none; color:inherit; }
+h1,h2,h3 { font-family: 'Poppins', sans-serif; }
+section { padding:80px 20px; max-width:1200px; margin:0 auto; }
+
+/* ===== Header / Nav ===== */
+header { position:fixed; top:0; width:100%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.1); z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:15px 30px; }
+header .logo { font-weight:bold; font-size:1.5rem; color:#6C63FF; cursor:pointer; }
+nav a { margin-left:25px; font-weight:500; transition:0.3s; }
+nav a:hover { color:#FF6584; }
+
+/* ===== Hero / O mnie ===== */
+#about { display:flex; flex-wrap:wrap; align-items:center; gap:40px; }
+#about .text { flex:1; }
+#about .text h1 { font-size:2.5rem; margin-bottom:15px; color:#6C63FF; }
+#about .text p { font-size:1.1rem; line-height:1.6; color:#555; }
+#about .avatar { flex:1; text-align:center; }
+#about .avatar img { width:250px; border-radius:50%; border:5px solid #6C63FF; transition: transform 0.3s; }
+#about .avatar img:hover { transform: rotate(10deg) scale(1.05); }
+
+/* ===== Projekty ===== */
+#projects { background:#fff; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
+#projects h2 { text-align:center; color:#6C63FF; margin-bottom:50px; }
+.project-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
+.project-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer; }
+.project-card:hover { transform: translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+.project-card img { width:100%; height:150px; object-fit:cover; }
+.project-card .content { padding:15px; }
+.project-card .content h3 { margin-bottom:10px; color:#FF6584; }
+.project-card .content p { font-size:0.95rem; color:#555; }
+
+/* ===== Kontakt ===== */
+#contact { background:#f0f0ff; border-radius:10px; padding:50px 30px; margin-top:40px; }
+#contact h2 { text-align:center; color:#6C63FF; margin-bottom:40px; }
+.contact-form { display:flex; flex-direction:column; max-width:500px; margin:0 auto; gap:15px; }
+.contact-form input, .contact-form textarea { padding:15px; border-radius:8px; border:1px solid #ccc; font-size:1rem; width:100%; resize:none; }
+.contact-form button { padding:15px; background:#6C63FF; color:#fff; border:none; border-radius:8px; font-size:1rem; cursor:pointer; transition:0.3s; }
+.contact-form button:hover { background:#FF6584; }
+
+/* ===== Footer ===== */
+footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
+
+/* ===== Animations ===== */
+.fade-in { opacity:0; transform:translateY(20px); transition:1s; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Dawid Personal</h1>
-  <div class="toggle-container">
-    <label class="toggle-label">
-      <span id="mode-icon"></span>
-      <input type="checkbox" id="mode-toggle">
-    </label>
-  </div>
+  <div class="logo">DawidPersonal</div>
+  <nav>
+    <a href="#about">O mnie</a>
+    <a href="#projects">Projekty</a>
+    <a href="#contact">Kontakt</a>
+  </nav>
 </header>
 
-<main>
-<noscript>
-<div class="noscript-warning">
-  <i data-lucide="alert-triangle"></i> JavaScript jest wyłączony! Włącz go, aby w pełni korzystać ze strony.
-</div>
-</noscript>
-
 <section id="about">
-<h2>O mnie</h2>
-<p>Cześć! Jestem <strong>Dawid</strong>. Witaj w moim zakątku internetu, gdzie dzielę się projektami, pomysłami i odrobiną humoru.</p>
-<p>Aktualny czas: <span id="current-time">Ładowanie...</span></p>
-<a href="https://paypal.me/DKowalski41">Wpłać darowiznę przez PayPal</a>
+  <div class="text fade-in">
+    <h1>Cześć, jestem Dawid!</h1>
+    <p>Lubię tworzyć strony internetowe, gry i ciekawe projekty. Łączę kreatywność z technologią, starając się aby każdy projekt był wyjątkowy i pełen życia. Moje ulubione technologie to JavaScript, HTML, CSS i React.</p>
+  </div>
+  <div class="avatar fade-in">
+    <img src="https://www.bing.com/th/id/OIP.lyBt9ihXGXuv5JwJpbmJQwHaGy?w=218&h=211&c=8&rs=1&qlt=70&o=7&cb=thws5&dpr=1.3&pid=3.1&rm=3" alt="Avatar Dawida">
+  </div>
 </section>
 
 <section id="projects">
-<h2>Projekty</h2>
-<details class="project"><summary>DawidMC</summary><p>Wciąż w przygotowaniu, ale już dostępne.</p><a href="content/projects/dawidm.html">Odwiedź</a></details>
-<details class="project"><summary>Globe Weather</summary><p>Prosta strona pogodowa, którą zrobiłem.</p><a href="content/projects/globeweather.html">Odwiedź</a></details>
-<details class="project"><summary>Live HTML Editor</summary><p>Online HTML editor, który działa :3</p><a href="content/projects/onlinehtml.html">Wypróbuj</a></details>
-<details class="project"><summary>What's My IP?</summary><p>Sprawdź swój IP w milisekundy</p><a href="content/projects/whatsmyip.html">Sprawdź</a></details>
-<details class="project"><summary>Fun Clicker</summary><p>Clicker z częstymi aktualizacjami</p><a href="content/projects/funclicker.html">Zagraj</a></details>
-<details class="project"><summary>Snake Game</summary><p>Prosta gra w węża, którą obiecałem</p><a href="content/projects/snake.html">Zagraj</a></details>
-<details class="project"><summary>Cracked Games</summary><p>Będę dodawał więcej gier, ale gry za darmo!</p><a href="content/projects/crackedgames.html">Odwiedź</a></details>
-<details class="project"><summary>Floppa Bomb/Floppa Unhook</summary><p>Usuwacz webhook'ów Discorda, można używać aby pozbyć się oszustw.</p><a href="content/projects/floppabomb.html">Wypróbuj</a></details>
+  <h2>Moje Projekty</h2>
+  <div class="project-grid">
+    <div class="project-card fade-in">
+      <img src="https://picsum.photos/300/150?2" alt="Projekt 2">
+      <div class="content">
+        <h3>Gra Wąż</h3>
+        <p>Prosta gra online stworzona w JavaScript, z interaktywnymi elementami.</p>
+        <a href="content/projects/snake.html" target="_blank">Zagraj teraz!</a>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <img src="https://picsum.photos/300/150?3" alt="Projekt 3">
+      <div class="content">
+        <h3>DawidMC</h3>
+        <p>Serwer Minecraft w pracach</p>
+        <a href="content/projects/dawidmc.html" target="_blank">Zobacz więcej</a>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <img src="https://picsum.photos/300/150?3" alt="Projekt 3">
+      <div class="content">
+        <h3>Globe Weather</h3>
+        <p>Prosta prognoza pogody w HTML, CSS i JS.</p>
+        <a href="content/projects/globeweather.html" target="_blank">Odwiedź</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="contact">
-<h2>Kontakt</h2>
-<details>
-<summary>E-mail</summary>
-<p><a href="mailto:kontakt@dawidpersonal.pl">kontakt@dawidpersonal.pl</a></p>
-</details>
-</section>
-
-<section id="extras">
-<h2>Dodatki</h2>
-<details>
-<summary>Cytaty</summary>
-<p>"We are horses.." - Lithium</p>
-<p>"Thank you for being the victim of my shallow emotions" - King Yao the 3rd</p>
-<p>"It should be easy ig" - Lithium</p>
-<p>Want your quote featured? Send me an email!</p>
-</details>
-</section>
-
-<section id="random-song">
-<h2>Losowa piosenka</h2>
-<div class="song-title" id="song-title">Ładowanie...</div>
-<audio controls id="audio-player">
-<source id="song-source" type="audio/mpeg">
-Twoja przeglądarka nie wspiera audio.
-</audio>
-<p style="font-size:14px; color:#888; font-style:italic; display:flex; align-items:center; justify-content:center; gap:6px;">
-<i data-lucide="music"></i> Liczba piosenek: 7. Max 20. Darmowy plan ogranicza ;)</p>
-<noscript>
-<p><strong>Jedna piosenka dostępna (JS wyłączony):</strong></p>
-<audio controls>
-<source src="unity.mp3" type="audio/mpeg">
-</audio>
-</noscript>
-</section>
-
-<section id="changelogs">
-<h2>Lista zmian</h2>
-<details><summary>Zmiana 1</summary><p>[+] Dodano sekcję listy zmian.</p></details>
-<details><summary>Zmiana 2</summary><p>[+] Dodano wsparcie NoScript.</p></details>
-<details><summary>Zmiana 3</summary><p>[+] Dodano przełącznik trybu ciemnego.</p></details>
-<details><summary>Zmiana 4</summary><p>[+] Dodano zegar na żywo.</p></details>
-<details><summary>Zmiana 5</summary><p>[+] Dodano link PayPal.</p><p>[+] Dodano grę Snake.</p></details>
-<details><summary>Zmiana 6</summary><p>[+] Dodano więcej piosenek.</p></details>
-<details><summary>Zmiana 7</summary><p>[*] - Przeprojektowano stronę.</p></details>
-</section>
-
-<section id="future-updates">
-  <h2>Przyszłe aktualizacje</h2>
-  <p>"Wezwałeś pomoc."</p>
-  <p>...</p>
-  <p>"Ale nikt nie przyszedł."</p>
-  <p>(co oznacza, że brak jeszcze przyszłych aktualizacji)</p>
-</section>
-
-</main>
 
 <footer>
-  &copy; 2025 Dawid Personal. All rights reserved.
+  &copy; 2025 DawidPersonal. Wszystkie prawa zastrzeżone.
 </footer>
 
 <script>
-const songs = [
-  { title: "21st Century Humour but it's a rave song", url: "centuryhumor.wav" },
-  { title: "DRIVING IN MY CARR", url: "https://dawidpersonal.pl/asgore-driving-home.mp3"},
-  { title: "TheFatRat - Unity [NCS Release]", url: "unity.mp3" },
-  { title: "Noisestrom - Crab Rave [NCS Release]", url: "original_zeowGW1.mp3" },
-  { title: "Doom Music", url: "doom.mp3" },
-  { title: "Tutorial Music Meme", url: "tutorial-music-meme.mp3" },
-  { title: "It's Raining Tacos", url: "tacos.mp3" }
-];
-
-function loadRandomSong() {
-  const randomIndex = Math.floor(Math.random() * songs.length);
-  const song = songs[randomIndex];
-  document.getElementById('song-title').textContent = song.title;
-  const source = document.getElementById('song-source');
-  source.src = song.url;
-  document.getElementById('audio-player').load();
-}
-
-function updateTime() {
-  const now = new Date();
-  const hours = String(now.getHours()).padStart(2,'0');
-  const minutes = String(now.getMinutes()).padStart(2,'0');
-  const seconds = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
-}
-
-window.onload = () => {
-  loadRandomSong();
-  updateTime();
-  lucide.createIcons();
-};
-
-setInterval(updateTime, 1000);
-
-const toggle = document.getElementById("mode-toggle");
-const body = document.body;
-const modeIcon = document.getElementById("mode-icon");
-
-function setIcon(theme) {
-  modeIcon.innerHTML = "";
-  if (theme === "dark") {
-    modeIcon.innerHTML = '<i data-lucide="sun"></i>';
-  } else {
-    modeIcon.innerHTML = '<i data-lucide="moon"></i>';
-  }
-  lucide.createIcons();
-}
-
-if(localStorage.getItem("theme")==="dark") {
-  body.classList.add("dark");
-  toggle.checked = true;
-  setIcon("dark");
-} else {
-  setIcon("light");
-}
-
-toggle.addEventListener("change", ()=>{
-  if(toggle.checked){
-    body.classList.add("dark");
-    localStorage.setItem("theme","dark");
-    setIcon("dark");
-  } else {
-    body.classList.remove("dark");
-    localStorage.setItem("theme","light");
-    setIcon("light");
-  }
+// ===== Fade-in animation on scroll =====
+const faders = document.querySelectorAll('.fade-in');
+window.addEventListener('load', () => {
+  faders.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 100){
+      el.classList.add('visible');
+    }
+  });
 });
 </script>
+
 </body>
 </html>
