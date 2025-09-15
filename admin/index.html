@@ -14,7 +14,7 @@
   #editor { flex: 1; width: 100%; font-family: monospace; font-size: 14px; padding: 10px; border: none; resize: none; }
   #deploy { padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; font-size: 16px; }
   #preview-container { flex: 1; border: none; }
-  iframe { width: 100%; height: 100%; border: none; }
+  iframe { width: 100%; height: 50%; border: none; }
 </style>
 </head>
 <body>
@@ -30,6 +30,8 @@
   <iframe id="preview"></iframe>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown support -->
+
 <script>
 // ===== CONFIG =====
 const GITHUB_OWNER = 'DawidPersonal';
@@ -44,11 +46,19 @@ const preview = document.getElementById('preview');
 const fileListContainer = document.getElementById('file-list');
 
 // ===== HELPER FUNCTIONS =====
-editor.addEventListener('input', () => {
-    preview.srcdoc = editor.value;
-});
 
-// Load file content from GitHub
+// Update live preview
+function updatePreview() {
+    if(FILE_PATH.endsWith('.md')) {
+        preview.srcdoc = marked.parse(editor.value);
+    } else {
+        preview.srcdoc = editor.value;
+    }
+}
+
+editor.addEventListener('input', updatePreview);
+
+// Load a file from GitHub
 async function loadFile(path) {
     FILE_PATH = path;
     try {
@@ -57,10 +67,10 @@ async function loadFile(path) {
         if (data.content) {
             const decoded = atob(data.content);
             editor.value = decoded;
-            preview.srcdoc = decoded;
+            updatePreview();
         } else {
             editor.value = '';
-            preview.srcdoc = '';
+            updatePreview();
         }
     } catch (err) {
         console.error('Error loading file:', err);
@@ -68,21 +78,34 @@ async function loadFile(path) {
     }
 }
 
-// Get file list from a folder in repo
+// List files from a folder in GitHub repo
 async function listFiles(path = 'dist') {
     try {
         const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${BRANCH}`);
         const files = await response.json();
+
+        if (!Array.isArray(files)) {
+            console.error('GitHub API did not return a list of files:', files);
+            alert('Failed to list files. Make sure the folder exists in your repo.');
+            return;
+        }
+
         fileListContainer.innerHTML = '';
-        files.forEach(file => {
-            if(file.type === 'file' && file.name.endsWith('.html')) {
-                const btn = document.createElement('button');
-                btn.textContent = file.name;
-                btn.onclick = () => loadFile(`${path}/${file.name}`);
-                fileListContainer.appendChild(btn);
-            }
+        const editableFiles = files.filter(file => file.type === 'file' && (file.name.endsWith('.html') || file.name.endsWith('.md')));
+
+        if (editableFiles.length === 0) {
+            alert('No editable files found in the folder.');
+            return;
+        }
+
+        editableFiles.forEach(file => {
+            const btn = document.createElement('button');
+            btn.textContent = file.name;
+            btn.onclick = () => loadFile(`${path}/${file.name}`);
+            fileListContainer.appendChild(btn);
         });
-        if(files.length) loadFile(`${path}/${files[0].name}`); // load first file by default
+
+        loadFile(`${path}/${editableFiles[0].name}`); // load first file
     } catch (err) {
         console.error('Error listing files:', err);
         alert('Failed to list files. Check console.');
@@ -92,14 +115,14 @@ async function listFiles(path = 'dist') {
 // Deploy updated file to GitHub
 document.getElementById('deploy').addEventListener('click', async () => {
     try {
-        // Get current SHA
+        // Get SHA of current file
         const getResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${BRANCH}`, {
             headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
         });
         const existingFile = await getResp.json();
         const sha = existingFile.sha;
 
-        // Push updated file
+        // Push changes
         const putResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
             method: 'PUT',
             headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
@@ -110,6 +133,7 @@ document.getElementById('deploy').addEventListener('click', async () => {
                 sha: sha
             })
         });
+
         const result = await putResp.json();
         if(putResp.ok){
             alert('✅ Successfully deployed!');
