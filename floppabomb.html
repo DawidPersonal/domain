@@ -4,92 +4,145 @@
   <meta charset="UTF-8">
   <title>Floppa Bomb</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #2c2f33;
-      color: #fff;
-      text-align: center;
-      padding: 40px;
-    }
-    h1 {
-      color: #ff4757;
-    }
-    p {
-      font-size: 14px;
-      color: #ccc;
-      margin-bottom: 20px;
-    }
-    .container {
-      background: #23272a;
-      padding: 20px;
-      border-radius: 12px;
-      width: 400px;
-      margin: auto;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
-    }
-    input, button {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    input {
-      background: #2f3136;
-      color: #fff;
-    }
-    button {
-      cursor: pointer;
-      background: #ff4757;
-      color: #fff;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #c0392b;
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    /* 🔔 Notification box styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1c1f26, #2c2f33);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ff6b81;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #b0b3b8;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .container {
+      background: #2f3136;
+      padding: 30px 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px 20px;
+      margin: 12px 0;
+      border-radius: 12px;
+      font-size: 1rem;
+      border: none;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input {
+      background: #202225;
+      color: #fff;
+      border: 1px solid #3a3c43;
+    }
+
+    input:focus {
+      border-color: #ff4757;
+      box-shadow: 0 0 10px rgba(255,71,87,0.5);
+    }
+
+    button {
+      background: linear-gradient(45deg, #ff4757, #ff6b81);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #ff6b81, #ff4757);
+      transform: scale(1.05);
+    }
+
+    /* Notification box */
     .notification {
       position: fixed;
       top: 20px;
       right: 20px;
       background: #23272a;
       color: #fff;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      padding: 15px 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
       opacity: 0;
-      transform: translateX(120%);
+      transform: translateX(150%);
       transition: all 0.4s ease;
       z-index: 9999;
+      font-weight: 500;
     }
+
     .notification.show {
       opacity: 1;
       transform: translateX(0);
     }
+
     .notification.success {
-      border-left: 5px solid #2ecc71;
+      border-left: 6px solid #2ecc71;
     }
+
     .notification.error {
-      border-left: 5px solid #e74c3c;
+      border-left: 6px solid #e74c3c;
+    }
+
+    /* Vine Boom animation */
+    @keyframes boom {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    button.boom {
+      animation: boom 0.3s ease-in-out;
     }
   </style>
 </head>
 <body>
   <h1>Floppa Unhook</h1>
-  <p>A Discord webhook deleter that is used for educational purposes only, used to remove scam webhooks.</p>
+  <p>Discord webhook deleter (educational purposes only) used to remove scam webhooks safely.</p>
 
   <div class="container">
     <input id="webhookUrl" type="text" placeholder="Enter Webhook URL" />
-    <button onclick="bombWebhook()">💣 bomb 💣</button>
+    <button onclick="bombWebhook()">💣 Bomb Webhook 💣</button>
   </div>
 
-  <!-- 🔔 Notification element -->
+  <!-- Notification -->
   <div id="notification" class="notification"></div>
 
-  <!-- 🔊 Vine boom sound -->
+  <!-- Vine boom sound -->
   <audio id="vineBoom" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
 
   <script>
@@ -103,28 +156,31 @@
       }, 3000);
     }
 
-    function playVineBoom() {
+    function playVineBoom(button) {
       const audio = document.getElementById("vineBoom");
-      audio.currentTime = 0; // restart sound if spam-clicked
+      audio.currentTime = 0;
       audio.play();
+      if (button) {
+        button.classList.add('boom');
+        setTimeout(() => button.classList.remove('boom'), 300);
+      }
     }
 
     function bombWebhook() {
-      playVineBoom();
+      const button = document.querySelector('button');
+      playVineBoom(button);
 
       const url = document.getElementById("webhookUrl").value;
       if (!url) return showNotification("Please enter a webhook URL!", "error");
 
       const embed = {
-        title: "webhook bombed",
-        description: "your webhook was unhooked by floppa bomb\n\n" +
-                     "if you see this message, your webhook is deleted.",
+        title: "Webhook Bombed 💣",
+        description: "Your webhook has been unhooked by Floppa Bomb.\n\nIf you see this, it has been deleted.",
         color: 0xff4757,
         footer: { text: "floppabomb" },
         thumbnail: { url: "https://i.imgur.com/4M34hi2.png" }
       };
 
-      // Step 1: Send embed
       fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -142,11 +198,8 @@
         }
       })
       .then(res => {
-        if (res.ok) {
-          showNotification("Webhook has been removed successfully.", "success");
-        } else {
-          showNotification("Webhook not deleted.", "error");
-        }
+        if (res.ok) showNotification("Webhook removed successfully.", "success");
+        else showNotification("Webhook not deleted.", "error");
       })
       .catch(err => showNotification("❌ Error: " + err.message, "error"));
     }
