@@ -1,0 +1,152 @@
+<html lang="pl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tworzenie Stron – Kontakt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f7f8fc;
+      color: #1f2937;
+      display: flex;
+      justify-content: center;
+      padding: 50px 20px;
+    }
+
+    .wrapper {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #6b7280;
+    }
+
+    .button-mail {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 0.9rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #4f46e5;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .button-mail:hover {
+      background-color: #6366f1;
+      transform: translateY(-2px);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .feature {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .testimonials {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .testimonial {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    @media(max-width: 640px){
+      header h1 { font-size: 2rem; }
+      .features { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Chcesz własną stronę internetową?</h1>
+      <p>Zgłoś się do nas, a stworzymy nowoczesną, responsywną i łatwą w zarządzaniu stronę.</p>
+      <a href="mailto:kontakt@dawidpersonal.pl" class="button-mail">Skontaktuj się ze mną</a>
+    </header>
+
+    <section class="features">
+      <div class="feature">
+        <h3>Responsywny Design</h3>
+        <p>Twoja strona będzie wyglądała świetnie na komputerach, tabletach i telefonach.</p>
+      </div>
+      <div class="feature">
+        <h3>Nowoczesny Design</h3>
+        <p>Estetyczny i przyciągający uwagę wygląd dostosowany do Twojej marki/uslugi.</p>
+      </div>
+      <div class="feature">
+        <h3>Jak wygląda edycja?</h3>
+        <p>Na razie nie mamy systemu CMS, trzeba się skontaktować ze mną aby wprowadzić edycję do strony.</p>
+      </div>
+      <div class="feature">
+        <h3>Optymalizacja SEO</h3>
+        <p>Strona przygotowana pod wyszukiwarki, szybka i przyjazna użytkownikom.</p>
+      </div>
+    </section>
+
+ 
+
+    <footer>
+      kontakt@dawidpersonal.pl
+    </footer>
+  </div>
+
+</body></html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Floppa Bomb</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #2c2f33;
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #ff4757;
+    }
+    p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    .container {
+      background: #23272a;
+      padding: 20px;
+      border-radius: 12px;
+      width: 400px;
+      margin: auto;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+    }
+    input, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    input {
+      background: #2f3136;
+      color: #fff;
+    }
+    button {
+      cursor: pointer;
+      background: #ff4757;
+      color: #fff;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #c0392b;
+    }
+
+    /* 🔔 Notification box styling */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #23272a;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateX(120%);
+      transition: all 0.4s ease;
+      z-index: 9999;
+    }
+    .notification.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .notification.success {
+      border-left: 5px solid #2ecc71;
+    }
+    .notification.error {
+      border-left: 5px solid #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Floppa Unhook</h1>
+  <p>A Discord webhook deleter that is used for educational purposes only, used to remove scam webhooks.</p>
+
+  <div class="container">
+    <input id="webhookUrl" type="text" placeholder="Enter Webhook URL" />
+    <button onclick="bombWebhook()">💣 bomb 💣</button>
+  </div>
+
+  <!-- 🔔 Notification element -->
+  <div id="notification" class="notification"></div>
+
+  <!-- 🔊 Vine boom sound -->
+  <audio id="vineBoom" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+
+  <script>
+    function showNotification(message, type = "success") {
+      const notif = document.getElementById("notification");
+      notif.textContent = message;
+      notif.className = `notification ${type} show`;
+
+      setTimeout(() => {
+        notif.classList.remove("show");
+      }, 3000);
+    }
+
+    function playVineBoom() {
+      const audio = document.getElementById("vineBoom");
+      audio.currentTime = 0; // restart sound if spam-clicked
+      audio.play();
+    }
+
+    function bombWebhook() {
+      playVineBoom();
+
+      const url = document.getElementById("webhookUrl").value;
+      if (!url) return showNotification("Please enter a webhook URL!", "error");
+
+      const embed = {
+        title: "webhook bombed",
+        description: "your webhook was unhooked by floppa bomb\n\n" +
+                     "if you see this message, your webhook is deleted.",
+        color: 0xff4757,
+        footer: { text: "floppabomb" },
+        thumbnail: { url: "https://i.imgur.com/4M34hi2.png" }
+      };
+
+      // Step 1: Send embed
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: "Floppa Bomb",
+          avatar_url: "https://i.imgur.com/4M34hi2.png",
+          embeds: [embed]
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          return fetch(url, { method: "DELETE" });
+        } else {
+          throw new Error("Failed to send embed.");
+        }
+      })
+      .then(res => {
+        if (res.ok) {
+          showNotification("Webhook has been removed successfully.", "success");
+        } else {
+          showNotification("Webhook not deleted.", "error");
+        }
+      })
+      .catch(err => showNotification("❌ Error: " + err.message, "error"));
+    }
+  </script>
+</body>
+</html>
