@@ -7,6 +7,15 @@
 <meta name="description" content="Dawid Personal – Strona z projektami, grami online i kreatywnymi pomysłami. Zobacz moje projekty, gry i dodatkowe materiały multimedialne.">
 <meta name="keywords" content="Dawid Personal, projekty online, gry, HTML, web development, kreatywne pomysły">
 <meta name="author" content="Dawid">
+<meta property="og:title" content="Dawid Personal – Projekty i Gry Online">
+<meta property="og:description" content="Sprawdź moje projekty, gry online i kreatywne pomysły na stronie Dawid Personal.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dawidpersonal.pl/">
+<meta property="og:image" content="https://dawidpersonal.pl/zinc.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dawid Personal – Projekty i Gry Online">
+<meta name="twitter:description" content="Odwiedź Dawid Personal – projekty online, gry, multimedia i kreatywne pomysły.">
+<meta name="twitter:image" content="https://dawidpersonal.pl/zinc.png">
 <link rel="canonical" href="https://dawidpersonal.pl/">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -67,18 +76,14 @@ body.dark a { color: #4fa3ff; }
 
 <section id="projects">
 <h2>Projekty</h2>
-<!-- CMS Loop Start -->
-{{#each projects}}
-<details class="project">
-  <summary>{{title}}</summary>
-  <p>{{description}}</p>
-  {{#if image}}
-  <img src="{{image}}" alt="{{title}}" style="max-width:100%;border-radius:8px;margin-bottom:10px;">
-  {{/if}}
-  <a href="{{file_path}}">Odwiedź</a>
-</details>
-{{/each}}
-<!-- CMS Loop End -->
+<details class="project"><summary>DawidMC</summary><p>Wciąż w przygotowaniu, ale już dostępne.</p><a href="content/projects/dawidm.html">Odwiedź</a></details>
+<details class="project"><summary>Globe Weather</summary><p>Prosta strona pogodowa, którą zrobiłem.</p><a href="content/projects/globeweather.html">Odwiedź</a></details>
+<details class="project"><summary>Live HTML Editor</summary><p>Online HTML editor, który działa :3</p><a href="content/projects/onlinehtml.html">Wypróbuj</a></details>
+<details class="project"><summary>What's My IP?</summary><p>Sprawdź swój IP w milisekundy</p><a href="content/projects/whatsmyip.html">Sprawdź</a></details>
+<details class="project"><summary>Fun Clicker</summary><p>Clicker z częstymi aktualizacjami</p><a href="content/projects/funclicker.html">Zagraj</a></details>
+<details class="project"><summary>Snake Game</summary><p>Prosta gra w węża, którą obiecałem</p><a href="content/projects/snake.html">Zagraj</a></details>
+<details class="project"><summary>Cracked Games</summary><p>Będę dodawał więcej gier, ale gry za darmo!</p><a href="content/projects/crackedgames.html">Odwiedź</a></details>
+<details class="project"><summary>Floppa Bomb/Floppa Unhook</summary><p>Usuwacz webhook'ów Discorda, można używać aby pozbyć się oszustw.</p><a href="content/projects/floppabomb.html">Wypróbuj</a></details>
 </section>
 
 <section id="contact">

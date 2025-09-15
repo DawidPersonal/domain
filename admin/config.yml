@@ -1,9 +1,10 @@
 # /admin/config.yml
 backend:
-  name: github               # Use GitHub as backend
-  repo: DawidPersonal/domain # Your GitHub repository
-  branch: main               # Branch to save content
-  auth_type: "token"         # Use a personal access token for login
+  name: github
+  repo: DawidPersonal/domain
+  branch: main
+  auth_type: "token"
+         # Use a personal access token for login
   commit_messages:
     create: "Create {{collection}} '{{slug}}'"
     update: "Update {{collection}} '{{slug}}'"
