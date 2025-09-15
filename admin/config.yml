@@ -1,0 +1,50 @@
+# /admin/config.yml
+backend:
+  name: git-gateway          # Uses GitHub repository as backend
+  branch: main               # Branch to save content
+  commit_messages:
+    create: "Create {{collection}} '{{slug}}'"
+    update: "Update {{collection}} '{{slug}}'"
+    delete: "Delete {{collection}} '{{slug}}'"
+    uploadMedia: "Upload '{{path}}'"
+    deleteMedia: "Delete '{{path}}'"
+publish_mode: simple         # simple or editorial_workflow
+
+media_folder: "static/images/uploads"   # Where uploaded files are stored in repo
+public_folder: "/images/uploads"        # How files are accessed in the site
+
+site_url: "https://dawidpersonal.pl"    # Your live site
+display_url: "https://dawidpersonal.pl"
+
+logo_url: "https://dawidpersonal.pl/images/logo.svg" # Optional logo
+locale: "en"
+show_preview_links: true
+search: true
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "URL", name: "url", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Image", name: "image", widget: "image" }
