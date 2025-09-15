@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,17 +62,6 @@ const sidebar = document.getElementById('sidebar');
 const editorContainer = document.getElementById('editor-container');
 const notification = document.getElementById('notification');
 
-// ===== AUDIO =====
-const songs = [
-  { title: "21st Century Humour but it's a rave song", url: "centuryhumor.wav" },
-  { title: "DRIVING IN MY CARR", url: "https://dawidpersonal.pl/asgore-driving-home.mp3" },
-  { title: "TheFatRat - Unity [NCS Release]", url: "unity.mp3" },
-  { title: "Noisestrom - Crab Rave [NCS Release]", url: "original_zeowGW1.mp3" },
-  { title: "Doom Music", url: "doom.mp3" },
-  { title: "Tutorial Music Meme", url: "tutorial-music-meme.mp3" },
-  { title: "It's Raining Tacos", url: "tacos.mp3" }
-];
-
 // ===== UTILS =====
 function showNotification(msg, duration=3000){
   notification.textContent = msg;
@@ -88,6 +77,14 @@ function updatePreview() {
     }
 }
 
+// UTF-8 safe Base64
+function utf8_to_b64(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+function b64_to_utf8(str) {
+    return decodeURIComponent(escape(atob(str)));
+}
+
 editor.addEventListener('input', updatePreview);
 
 async function loadFile(path) {
@@ -98,8 +95,7 @@ async function loadFile(path) {
         });
         const data = await response.json();
         if(data.content){
-            const decoded = atob(data.content);
-            editor.value = decoded;
+            editor.value = b64_to_utf8(data.content);
             updatePreview();
         } else {
             editor.value = '';
@@ -145,7 +141,7 @@ document.getElementById('deploy').addEventListener('click', async ()=>{
             headers:{'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type':'application/json'},
             body: JSON.stringify({
                 message: `Update ${FILE_PATH} via Live CMS`,
-                content: btoa(editor.value),
+                content: utf8_to_b64(editor.value),
                 branch: BRANCH,
                 sha: sha
             })
