@@ -1,6 +1,6 @@
 # /admin/config.yml
 backend:
-  name: github
+  name: local
   repo: DawidPersonal/domain
   branch: main
   auth_type: "token"
