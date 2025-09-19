@@ -14,15 +14,17 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 let currentUser = null;
 const brzydkieSlowa = ["kurwa","chuj","pizda","idiota","debil"];
 
+// upload pliku do Storage
 async function uploadFile(file, folder){
   if(!file) return null
   const fileName = `${folder}/${Date.now()}_${file.name}`
-  const { data, error } = await supabase.storage.from('chat-files').upload(fileName, file)
+  const { error } = await supabase.storage.from('chat-files').upload(fileName, file)
   if(error){ console.log(error); return null }
   const { publicUrl } = supabase.storage.from('chat-files').getPublicUrl(fileName)
   return publicUrl
 }
 
+// login / rejestracja
 async function login(){
   const username = document.getElementById('username').value.trim()
   const password = document.getElementById('password').value.trim()
@@ -50,6 +52,7 @@ async function login(){
   subscribeMessages()
 }
 
+// wysyłanie wiadomości
 async function sendMessage(){
   const text = document.getElementById('message').value
   const fileInput = document.getElementById('file')
@@ -69,7 +72,7 @@ async function sendMessage(){
   fileInput.value=""
 }
 
-// komentarze
+// dodawanie komentarza
 async function addComment(message_id, text){
   if(!text) return
   await supabase.from('comments').insert([{
@@ -79,7 +82,12 @@ async function addComment(message_id, text){
   }])
 }
 
-// render wiadomości
+// usuwanie własnej wiadomości
+async function deleteMessage(msgId){
+  await supabase.from('messages').delete().eq('id', msgId).eq('user_id', currentUser.id)
+}
+
+// renderowanie wiadomości
 function renderMessage(msg, container){
   const div = document.createElement('div')
   div.className='message'
@@ -88,6 +96,14 @@ function renderMessage(msg, container){
   if(msg.file_url){
     if(msg.file_type.startsWith('image')) div.innerHTML+=`<br><img src="${msg.file_url}" width="200"/>`
     else if(msg.file_type.startsWith('video')) div.innerHTML+=`<br><video src="${msg.file_url}" controls width="200"></video>`
+  }
+
+  // przycisk usuwania jeśli własna wiadomość
+  if(msg.user_id.id === currentUser.id){
+    const delBtn = document.createElement('button')
+    delBtn.textContent="Usuń"
+    delBtn.onclick=()=>{ deleteMessage(msg.id) }
+    div.appendChild(delBtn)
   }
 
   // komentarze
@@ -119,19 +135,19 @@ function renderMessage(msg, container){
     }).subscribe()
 }
 
-// subscribe wiadomości realtime
-function subscribeMessages(){
+// subskrypcja wiadomości
+async function subscribeMessages(){
   const messagesDiv = document.getElementById('messages')
 
-  // realtime wiadomości
+  // pobranie historii od najnowszych
+  const { data, error } = await supabase.from('messages').select(`*,user_id(*)`).order('inserted_at',{ascending:false})
+  if(data) data.forEach(msg => renderMessage(msg, messagesDiv))
+
+  // realtime nowych wiadomości
   supabase.channel('public:messages')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload=>{
       renderMessage(payload.new, messagesDiv)
     }).subscribe()
-
-  // fetch history
-  supabase.from('messages').select(`*,user_id(*)`).order('inserted_at',{ascending:false})
-    .then(res=>{ if(res.data) res.data.forEach(m=>renderMessage(m,messagesDiv)) })
 }
 
 // persistent login przy ładowaniu
