@@ -43,6 +43,8 @@ async function login(){
     currentUser = newUser
   }
 
+  localStorage.setItem('user', JSON.stringify(currentUser))
+
   document.getElementById('login').style.display='none'
   document.getElementById('chat').style.display='block'
   subscribeMessages()
@@ -57,18 +59,17 @@ async function sendMessage(){
     fileType = fileInput.files[0].type
   }
 
-  const { data:msg } = await supabase.from('messages').insert([{
+  await supabase.from('messages').insert([{
     user_id: currentUser.id,
     text:text,
     file_url:fileUrl,
     file_type:fileType
-  }]).select().single()
-
+  }])
   document.getElementById('message').value=""
   fileInput.value=""
 }
 
-// dodawanie komentarza
+// komentarze
 async function addComment(message_id, text){
   if(!text) return
   await supabase.from('comments').insert([{
@@ -78,7 +79,7 @@ async function addComment(message_id, text){
   }])
 }
 
-// renderowanie wiadomości z komentarzami
+// render wiadomości
 function renderMessage(msg, container){
   const div = document.createElement('div')
   div.className='message'
@@ -108,24 +109,40 @@ function renderMessage(msg, container){
   container.prepend(div)
 
   // realtime komentarze
-  supabase.from(`comments:message_id=eq.${msg.id}`).on('INSERT',payload=>{
-    const c = payload.new
-    const commentDiv = document.createElement('div')
-    commentDiv.className='comment'
-    commentDiv.innerHTML=`<em>${currentUser.username}:</em> ${c.text}`
-    commentsDiv.appendChild(commentDiv)
-  }).subscribe()
+  supabase.channel(`comments:message_id=eq.${msg.id}`)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comments', filter: `message_id=eq.${msg.id}` }, payload=>{
+      const c = payload.new
+      const commentDiv = document.createElement('div')
+      commentDiv.className='comment'
+      commentDiv.innerHTML=`<em>${currentUser.username}:</em> ${c.text}`
+      commentsDiv.appendChild(commentDiv)
+    }).subscribe()
 }
 
-// subskrypcja wiadomości
+// subscribe wiadomości realtime
 function subscribeMessages(){
   const messagesDiv = document.getElementById('messages')
-  // realtime insert
-  supabase.from('messages').on('INSERT',payload=>renderMessage(payload.new, messagesDiv)).subscribe()
 
-  // wczytanie historii
+  // realtime wiadomości
+  supabase.channel('public:messages')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload=>{
+      renderMessage(payload.new, messagesDiv)
+    }).subscribe()
+
+  // fetch history
   supabase.from('messages').select(`*,user_id(*)`).order('inserted_at',{ascending:false})
     .then(res=>{ if(res.data) res.data.forEach(m=>renderMessage(m,messagesDiv)) })
+}
+
+// persistent login przy ładowaniu
+window.onload = ()=>{
+  const savedUser = localStorage.getItem('user')
+  if(savedUser){
+    currentUser = JSON.parse(savedUser)
+    document.getElementById('login').style.display='none'
+    document.getElementById('chat').style.display='block'
+    subscribeMessages()
+  }
 }
 
 document.getElementById('loginBtn').onclick=login
