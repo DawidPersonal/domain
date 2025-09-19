@@ -110,6 +110,10 @@ function renderMessage(msg, container){
   commentsDiv.className='comments'
   div.appendChild(commentsDiv)
 
+  const formDiv = document.createElement('div')
+  formDiv.className='comment-form'
+  formDiv.appendChild(input)
+  formDiv.appendChild(btn)
   div.appendChild(formDiv)
 
   container.prepend(div)
