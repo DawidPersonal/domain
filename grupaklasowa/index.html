@@ -25,8 +25,8 @@ const db = getDatabase(app);
 let currentUser = null;
 let avatarData = null;
 
-// Lista niedozwolonych słów w nazwie użytkownika
-const brzydkieSlowa = ["kurwa","chuj","pizda","idiota","debil"]; 
+// Brzydkie słowa do filtrowania
+const brzydkieSlowa = ["kurwa","chuj","pizda","idiota","debil"];
 
 function encodeFileToBase64(file) {
   return new Promise((resolve, reject) => {
@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!username || !password) { alert("Podaj nazwę użytkownika i hasło"); return; }
 
-    // Sprawdzanie brzydkich słów
     const lower = username.toLowerCase();
     if (brzydkieSlowa.some(w => lower.includes(w))) {
       alert("Nazwa użytkownika zawiera niedozwolone słowo");
@@ -139,11 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 
-  // Natychmiastowe wczytanie historii
   get(messagesRef).then(snapshot => renderMessages(snapshot.val()));
   onValue(messagesRef, snapshot => renderMessages(snapshot.val()));
 
-  // Lista online
+  // Lista użytkowników online
   onValue(ref(db, "status"), snapshot => {
     usersDiv.innerHTML = "<h3>Użytkownicy online:</h3>";
     const data = snapshot.val() || {};
