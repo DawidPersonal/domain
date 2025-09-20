@@ -113,19 +113,7 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
   &copy; 2025 DawidPersonal. Wszystkie prawa zastrzeżone.
 </footer>
 
-<!-- AI Chat Button -->
-<button id="ai-chat-button">AI Asystent</button>
 
-<!-- Collapsible AI Chat Widget -->
-<div id="ai-chat-widget">
-  <div id="ai-messages"></div>
-  <div id="ai-input-container">
-    <input id="ai-input" type="text" placeholder="Zadaj pytanie..."/>
-    <button id="ai-send">Wyślij</button>
-  </div>
-</div>
-
-<script src="chat.js"></script>
 <script>
 // ===== Fade-in animation on scroll =====
 const faders = document.querySelectorAll('.fade-in');
@@ -138,12 +126,7 @@ window.addEventListener('load', () => {
   });
 });
 
-// ===== Collapsible chat toggle =====
-const chatButton = document.getElementById('ai-chat-button');
-const chatWidget = document.getElementById('ai-chat-widget');
-chatButton.addEventListener('click', () => {
-  chatWidget.style.display = chatWidget.style.display === 'flex' ? 'none' : 'flex';
-});
+
 </script>
 
 </body>
