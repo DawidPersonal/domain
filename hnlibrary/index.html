@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hello Neighbor Library</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .card {
+      transition: transform .24s ease, box-shadow .24s ease, opacity .3s ease;
+      will-change: transform;
+    }
+    .card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12);
+    }
+    .thumb {
+      height: 170px;
+      object-fit: cover;
+      width: 100%;
+      display: block;
+      background: #f3f4f6;
+    }
+    .fade {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    main .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 900px) {
+      main .grid {
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+      }
+    }
+    @media (min-width: 1280px) {
+      main .grid {
+        grid-template-columns: repeat(3,1fr);
+        gap: 1.25rem;
+      }
+    }
+    .small-muted {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen p-6 transition-colors">
+  <div class="max-w-6xl mx-auto">
+
+    <header class="flex items-center justify-between mb-6 gap-4">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+          <i data-lucide="library"></i>
+          <span>Hello Neighbor Library</span>
+        </h1>
+        <p class="text-gray-600 max-w-2xl mt-1">All builds — using only public thumbnails (Bing / public assets).</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a class="text-sm text-gray-700" href="#sources" title="Image sources">Image sources</a>
+      </div>
+    </header>
+
+    <div class="mb-6">
+      <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow search">
+        <i data-lucide="search"></i>
+        <input id="search" class="flex-1 outline-none" placeholder="Search versions, e.g. 'alpha', 'beta', 'release'..." />
+        <select id="filter-type" class="ml-2 p-2 rounded border">
+          <option value="">All</option>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+          <option value="pre">Pre-Alpha / Pre-Release</option>
+          <option value="release">Release</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="main" class="fade">
+      <div class="grid">
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="pre alpha" data-type="pre">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Pre‑Alpha"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="rocket"></i> Pre‑Alpha</h3>
+            <p class="text-gray-700 text-sm my-2">Earliest prototype — experimental mechanics.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Pre-Alpha.zip">
+              <i data-lucide="file"></i> Download
+            </a>
+            <span class="small-muted ml-2">Source: Bing</span>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="alpha 1" data-type="alpha">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Alpha 1"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="layers"></i> Alpha 1</h3>
+            <p class="text-gray-700 text-sm my-2">First large alpha with the early house layout and basic AI behaviors.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Alpha%201.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="alpha 2" data-type="alpha">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Alpha 2"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="layers"></i> Alpha 2</h3>
+            <p class="text-gray-700 text-sm my-2">Adds complexity to puzzles and AI improvements.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Alpha%202.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="alpha 3" data-type="alpha">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Alpha 3"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="layers"></i> Alpha 3</h3>
+            <p class="text-gray-700 text-sm my-2">Major redesigns to vertical house structure and new mechanics.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Alpha%203.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="alpha 4" data-type="alpha">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Alpha 4"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="layers"></i> Alpha 4</h3>
+            <p class="text-gray-700 text-sm my-2">Adds story bits, lighting updates and AI upgrades.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Alpha%204.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="beta 1" data-type="beta">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Beta 1"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="box"></i> Beta 1</h3>
+            <p class="text-gray-700 text-sm my-2">Early near-final house and gameplay flow.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Beta%201.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="beta 2" data-type="beta">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Beta 2"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="box"></i> Beta 2</h3>
+            <p class="text-gray-700 text-sm my-2">Polished beta build.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Beta%202.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="beta 3" data-type="beta">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Beta 3"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="box"></i> Beta 3</h3>
+            <p class="text-gray-700 text-sm my-2">Final beta before release.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Beta%203.zip"><i data-lucide="file"></i> Download</a>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="pre release" data-type="pre">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Pre-Release"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="zap"></i> Pre‑Release</h3>
+            <p class="text-gray-700 text-sm my-2">Pre‑release build (last step before full release).</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Full%20Game%20Pre%20Release.zip">
+              <i data-lucide="file"></i> Download
+            </a>
+            <span class="small-muted ml-2">Source: Bing</span>
+          </div>
+        </article>
+
+        <article class="card bg-white rounded-lg overflow-hidden shadow fade" data-name="release" data-type="release">
+          <img class="thumb" src="https://th.bing.com/th/id/OIP.1lo6vWS38FiG334AvwYqbwHaEK?w=200&h=120&c=7&r=0&o=5&pid=1.7" alt="Release"/>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center gap-2"><i data-lucide="star"></i> Release Day</h3>
+            <p class="text-gray-700 text-sm my-2">Official final release build.</p>
+            <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-2 rounded"
+               href="https://archive.org/download/hello-neighbor-archive/Hello%20Neighbor%20Release%20Day.zip">
+              <i data-lucide="file"></i> Download
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <footer id="sources" class="mt-10 text-sm text-gray-600">
+      <h4 class="font-semibold mb-2">Image sources (Bing thumbnails)</h4>
+      <ul class="list-disc ml-5">
+        <li>Every image is the same, Pre-Alpha image. Sorry i was lazy.</li>
+      </ul>
+      <p class="mt-2 text-xs text-gray-500">If you want more images — I can swap them later or help you host them yourself.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fade').forEach((el, i) => {
+        setTimeout(() => el.classList.add('show'), 80 * i + 80);
+      });
+    });
+
+    const search = document.getElementById('search');
+    const filter = document.getElementById('filter-type');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      const t = filter.value;
+      cards.forEach(card => {
+        const name = (card.getAttribute('data-name') || '').toLowerCase();
+        const type = (card.getAttribute('data-type') || '').toLowerCase();
+        const matchQ = q === '' || name.includes(q);
+        const matchT = t === '' || (t === 'pre' ? type === 'pre' : type === t);
+        card.style.display = (matchQ && matchT) ? 'block' : 'none';
+      });
+    }
+
+    search.addEventListener('input', applyFilter);
+    filter.addEventListener('change', applyFilter);
+  </script>
+</body>
+</html>
