@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dawid Personal – Profesjonalne Portfolio Web Development</title>
 <meta name="description" content="Dawid Personal – Profesjonalne portfolio web development. Tworzenie nowoczesnych, responsywnych stron internetowych, aplikacji webowych i kompleksowych usług IT.">
 <meta name="keywords" content="web development, portfolio, strony internetowe, aplikacje webowe, JavaScript, React, HTML, CSS, Electron, UX/UI, usługi IT">
@@ -10,42 +10,53 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://dawidpersonal.pl/">
 
+<!-- Fonts (you used Poppins and Roboto in CSS) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
 /* ===== Reset & Base ===== */
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Roboto', sans-serif; background:#f4f4f9; color:#333; scroll-behavior: smooth; }
+html,body{height:100%}
+body { font-family: 'Roboto', sans-serif; background:#f4f4f9; color:#333; scroll-behavior: smooth; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 a { text-decoration:none; color:inherit; }
 h1,h2,h3 { font-family: 'Poppins', sans-serif; }
 section { padding:80px 20px; max-width:1200px; margin:0 auto; }
 
 /* ===== Header / Nav ===== */
-header { position:fixed; top:0; width:100%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.1); z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:15px 30px; }
-header .logo { font-weight:bold; font-size:1.5rem; color:#6C63FF; cursor:pointer; }
+:root{
+  --header-h:72px;
+}
+header { position:fixed; top:0; left:0; right:0; height:var(--header-h); width:100%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.08); z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:15px 30px; }
+header .logo { font-weight:800; font-size:1.25rem; color:#6C63FF; cursor:pointer; }
 nav a { margin-left:25px; font-weight:500; transition:0.3s; }
 nav a:hover { color:#FF6584; }
 
+/* ensure anchor targets offset for fixed header */
+section[id] { scroll-margin-top: calc(var(--header-h) + 24px); }
+
 /* ===== Hero / O mnie ===== */
-#about { display:flex; flex-wrap:wrap; align-items:center; gap:40px; margin-top:80px; }
-#about .text { flex:1; }
+#about { display:flex; flex-wrap:wrap; align-items:center; gap:40px; margin-top:calc(var(--header-h) + 40px); }
+#about .text { flex:1; min-width:280px; }
 #about .text h1 { font-size:2.5rem; margin-bottom:15px; color:#6C63FF; }
-#about .text p { font-size:1.1rem; line-height:1.6; color:#555; }
-#about .avatar { flex:1; text-align:center; }
-#about .avatar img { width:250px; border-radius:50%; border:5px solid #6C63FF; transition: transform 0.3s; }
-#about .avatar img:hover { transform: rotate(10deg) scale(1.05); }
+#about .text p { font-size:1.05rem; line-height:1.6; color:#555; }
+#about .text a{ display:inline-block; margin-top:12px; color:#6C63FF; font-weight:600; }
+#about .avatar { flex:1; text-align:center; min-width:220px; }
+#about .avatar img { width:250px; max-width:70vw; border-radius:50%; border:5px solid #6C63FF; transition: transform 0.35s ease; display:inline-block; }
+#about .avatar img:hover { transform: rotate(10deg) scale(1.03); }
 
 /* ===== Usługi ===== */
-#services { background:#fff; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
-#services h2 { text-align:center; color:#6C63FF; margin-bottom:50px; }
+#services { background:#fff; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
+#services h2 { text-align:center; color:#6C63FF; margin-bottom:24px; }
 .service-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
-.service-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; padding:20px; }
-.service-card:hover { transform: translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+.service-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.04); transition:transform .25s ease, box-shadow .25s ease; padding:20px; }
+.service-card:hover { transform: translateY(-6px); box-shadow:0 10px 26px rgba(0,0,0,0.07); }
 
 /* ===== Projekty ===== */
-#projects { background:#fff; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
-#projects h2 { text-align:center; color:#6C63FF; margin-bottom:50px; }
+#projects { background:#fff; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:40px; padding:40px; }
+#projects h2 { text-align:center; color:#6C63FF; margin-bottom:24px; }
 .project-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
-.project-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:0.3s; cursor:pointer; }
-.project-card:hover { transform: translateY(-5px) scale(1.02); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+.project-card { background:#f9f9ff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.04); transition:transform .25s ease, box-shadow .25s ease; cursor:pointer; }
+.project-card:hover { transform: translateY(-6px); box-shadow:0 10px 26px rgba(0,0,0,0.07); }
 .project-card img { width:100%; height:150px; object-fit:cover; }
 .project-card .content { padding:15px; }
 .project-card .content h3 { margin-bottom:10px; color:#FF6584; }
@@ -53,7 +64,7 @@ nav a:hover { color:#FF6584; }
 
 /* ===== Kontakt ===== */
 #contact { background:#f0f0ff; border-radius:10px; padding:50px 30px; margin-top:40px; }
-#contact h2 { text-align:center; color:#6C63FF; margin-bottom:40px; }
+#contact h2 { text-align:center; color:#6C63FF; margin-bottom:20px; }
 .contact-form { display:flex; flex-direction:column; max-width:500px; margin:0 auto; gap:15px; }
 .contact-form input, .contact-form textarea { padding:15px; border-radius:8px; border:1px solid #ccc; font-size:1rem; width:100%; resize:none; }
 .contact-form button { padding:15px; background:#6C63FF; color:#fff; border:none; border-radius:8px; font-size:1rem; cursor:pointer; transition:0.3s; }
@@ -63,18 +74,23 @@ nav a:hover { color:#FF6584; }
 footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
 
 /* ===== Animations ===== */
-.fade-in { opacity:0; transform:translateY(20px); transition:1s; }
+.fade-in { opacity:0; transform:translateY(20px); transition: transform .8s cubic-bezier(.2,.9,.2,1), opacity .8s ease; }
 .fade-in.visible { opacity:1; transform:translateY(0); }
 
-/* ===== Collapsible AI Chat ===== */
-#ai-chat-button { position:fixed; bottom:20px; right:20px; padding:15px 20px; background:#6C63FF; color:#fff; border:none; border-radius:50px; cursor:pointer; box-shadow:0 5px 20px rgba(0,0,0,0.2); z-index:2000; }
-#ai-chat-widget { position:fixed; bottom:80px; right:20px; width:350px; max-width:90%; background:#fff; border-radius:10px; box-shadow:0 5px 20px rgba(0,0,0,0.2); display:none; flex-direction:column; z-index:2000; }
-#ai-messages { height:300px; overflow-y:auto; padding:15px; border-bottom:1px solid #ddd; }
-#ai-input-container { display:flex; padding:10px; }
-#ai-input { flex:1; padding:10px; border-radius:5px; border:1px solid #ccc; }
-#ai-send { margin-left:10px; padding:10px 15px; background:#6C63FF; color:#fff; border:none; border-radius:5px; cursor:pointer; }
-.msg { margin-bottom:10px; }
-.msg strong { display:inline-block; margin-right:5px; }
+/* ===== Collapsible AI Chat (styles only) ===== */
+#ai-chat-button { position:fixed; bottom:20px; right:20px; padding:14px 16px; background:#6C63FF; color:#fff; border:none; border-radius:999px; cursor:pointer; box-shadow:0 8px 30px rgba(108,99,255,0.18); z-index:2000; }
+#ai-chat-widget { position:fixed; bottom:80px; right:20px; width:360px; max-width:90%; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.16); display:none; flex-direction:column; z-index:2000; overflow:hidden; }
+#ai-messages { height:300px; overflow-y:auto; padding:15px; border-bottom:1px solid #eee; background:#fbfbff; }
+#ai-input-container { display:flex; padding:12px; gap:8px; }
+#ai-input { flex:1; padding:10px; border-radius:8px; border:1px solid #ddd; }
+#ai-send { padding:10px 14px; background:#6C63FF; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+
+/* ===== Responsive tweaks ===== */
+@media (max-width:880px){
+  #about{flex-direction:column-reverse; text-align:center;}
+  nav a{margin-left:12px;}
+  header{padding:12px 18px;}
+}
 </style>
 </head>
 <body>
@@ -93,7 +109,7 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
   <div class="text fade-in">
     <h1>Cześć, jestem Dawid!</h1>
     <p>Tworzę nowoczesne i w pełni responsywne strony internetowe oraz aplikacje webowe, łącząc najnowsze technologie z doświadczeniem w projektowaniu UX/UI.</p>
-<a href="zgloszenie.html">Kontakt o strone internetową - kliknij tutaj.</a>
+    <a href="zgloszenie.html">Kontakt – zgłoś zlecenie</a>
   </div>
   <div class="avatar fade-in">
     <img src="https://www.bing.com/th/id/OIP.lyBt9ihXGXuv5JwJpbmJQwHaGy?w=218&h=211&c=8&rs=1&qlt=70&o=7&cb=thws5&dpr=1.3&pid=3.1&rm=3" alt="Zdjęcie Dawida – profesjonalny web developer">
@@ -103,33 +119,196 @@ footer { text-align:center; padding:20px; font-size:0.9rem; color:#888; }
 <section id="services">
   <h2>Moje Usługi</h2>
   <p>Tworzenie stron WWW, aplikacji webowych, optymalizacja i SEO.</p>
+
+  <div class="service-grid" aria-hidden="false">
+    <div class="service-card fade-in">
+      <h3>Strony WWW</h3>
+      <p>Responsywne strony z naciskiem na wydajność i SEO.</p>
+    </div>
+    <div class="service-card fade-in">
+      <h3>Aplikacje webowe</h3>
+      <p>SPA, PWA oraz backendy REST / GraphQL.</p>
+    </div>
+    <div class="service-card fade-in">
+      <h3>UX / UI</h3>
+      <p>Prototypy i design systemy dopasowane do produktu.</p>
+    </div>
+  </div>
 </section>
 
-<section id="projects">
-  <h2>Moje Projekty</h2>
-  <p>Przykładowe projekty pokazujące moje umiejętności.</p>
-</section>
 
-<center><br><br><a href="politykaprywatnosci">Polityka prywatnosci</a></center>
+<center style="margin-top:28px;"><a href="politykaprywatnosci">Polityka prywatności</a></center>
 
 <footer>
   &copy; 2025 DawidPersonal. Wszystkie prawa zastrzeżone.
 </footer>
 
+<!-- Optional AI chat button + widget (styles exist above) -->
+<button id="ai-chat-button" aria-expanded="false" aria-controls="ai-chat-widget">AI Chat</button>
+<div id="ai-chat-widget" role="dialog" aria-modal="false" aria-hidden="true">
+  <div id="ai-messages" aria-live="polite"></div>
+  <div id="ai-input-container">
+    <input id="ai-input" placeholder="Napisz wiadomość..." />
+    <button id="ai-send">Wyślij</button>
+  </div>
+</div>
 
 <script>
-// ===== Fade-in animation on scroll =====
-const faders = document.querySelectorAll('.fade-in');
-window.addEventListener('load', () => {
-  faders.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 100){
-      el.classList.add('visible');
+/*
+  Robust fade-in behavior:
+  - Uses IntersectionObserver (preferred) to add .visible when elements enter viewport.
+  - Fallback: on load + simple check so elements above fold become visible immediately.
+  - No code tries to access missing elements (guarded).
+*/
+
+(function(){
+  const faders = Array.from(document.querySelectorAll('.fade-in'));
+
+  function reveal(el){
+    if(!el.classList.contains('visible')) el.classList.add('visible');
+  }
+
+  // If IntersectionObserver supported — use it
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          reveal(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { root: null, rootMargin: '0px', threshold: 0.12 }); // 12% visibility
+
+    faders.forEach(el => {
+      io.observe(el);
+    });
+
+  } else {
+    // fallback: make visible if they are initially in view; also on scroll check
+    function checkVisible(){
+      faders.forEach(el => {
+        if(el.classList.contains('visible')) return;
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 80){
+          reveal(el);
+        }
+      });
+    }
+    window.addEventListener('load', checkVisible);
+    window.addEventListener('scroll', throttle(checkVisible, 200));
+    window.addEventListener('resize', throttle(checkVisible, 300));
+    // initial check
+    checkVisible();
+  }
+
+  // simple throttle
+  function throttle(fn, wait){
+    let last = 0;
+    return function(...args){
+      const now = Date.now();
+      if(now - last >= wait){ last = now; fn.apply(this,args); }
+    };
+  }
+
+})();
+
+/* Smooth anchor offset improvement (header is fixed).
+   We added CSS `scroll-margin-top` for sections which covers most cases.
+   But for older browsers or JS-controlled scroll you can use this handler.
+*/
+(function(){
+  // handle clicks on in-page anchors to ensure offset when needed
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const href = a.getAttribute('href');
+    if(href === '#' || href === '#!') return;
+    const target = document.querySelector(href);
+    if(target){
+      e.preventDefault();
+      const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '72', 10);
+      const rectTop = target.getBoundingClientRect().top + window.pageYOffset;
+      const scrollTo = rectTop - headerHeight - 16; // small gap
+      window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+      history.replaceState(null, '', href);
     }
   });
-});
+})();
 
+/* AI chat toggle (optional, harmless)
+   - does not depend on any external service; sends no network requests.
+*/
+(function(){
+  const btn = document.getElementById('ai-chat-button');
+  const widget = document.getElementById('ai-chat-widget');
+  const msgs = document.getElementById('ai-messages');
+  const aiSend = document.getElementById('ai-send');
+  const aiInput = document.getElementById('ai-input');
 
+  if(!btn || !widget) return; // guard
+
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    if(expanded){
+      widget.style.display = 'none';
+      widget.setAttribute('aria-hidden','true');
+      btn.setAttribute('aria-expanded','false');
+    } else {
+      widget.style.display = 'flex';
+      widget.setAttribute('aria-hidden','false');
+      btn.setAttribute('aria-expanded','true');
+      aiInput.focus();
+    }
+  });
+
+  aiSend.addEventListener('click', () => {
+    const val = aiInput.value.trim();
+    if(!val) return;
+    // append user message
+    appendMsg('Ty', val);
+    aiInput.value = '';
+    // fake reply (demo)
+    setTimeout(()=> appendMsg('AI', 'Dziękuję — otrzymałem wiadomość. To demo lokalne.'), 700);
+  });
+
+  function appendMsg(who, text){
+    const el = document.createElement('div');
+    el.className = 'msg';
+    el.innerHTML = '<strong>' + escapeHtml(who) + ':</strong> ' + escapeHtml(text);
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); }); }
+
+})();
+
+/* Contact form: simple local demo storage to avoid errors if backend not present */
+(function(){
+  const form = document.querySelector('.contact-form');
+  if(!form) return;
+  const send = document.getElementById('contact-send');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name') || '',
+      email: formData.get('email') || '',
+      message: formData.get('message') || ''
+    };
+    // basic validation
+    if(!data.name || !data.email || !data.message){
+      alert('Proszę wypełnić wszystkie pola.');
+      return;
+    }
+    // store locally as demo (no network)
+    const stored = JSON.parse(localStorage.getItem('dawid_contacts')||'[]');
+    stored.push(Object.assign({ ts: Date.now() }, data));
+    localStorage.setItem('dawid_contacts', JSON.stringify(stored));
+    send.textContent = 'Wysłano ✓';
+    send.disabled = true;
+    setTimeout(()=>{ send.textContent = 'Wyślij wiadomość'; send.disabled = false; form.reset(); }, 1400);
+  });
+})();
 </script>
 
 </body>
