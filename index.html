@@ -141,35 +141,18 @@
 </div>
 
 <script>
-const btn=document.getElementById('ai-chat-btn');
-const box=document.getElementById('ai-chat');
-btn.onclick=()=>box.style.display=box.style.display==='flex'?'none':'flex';
-
-const msgs=document.getElementById('ai-messages');
-const input=document.getElementById('ai-input');
-const send=document.getElementById('ai-send');
-
-function addMsg(text,cls){
-  const d=document.createElement('div');
-  d.className='msg '+cls;
-  d.textContent=text;
-  msgs.appendChild(d);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-
-function aiReply(q){
-  q=q.toLowerCase();
-  if(q.includes('stron')) return 'Mogę stworzyć nowoczesną stronę internetową — powiedz czego potrzebujesz!';
-  if(q.includes('kontakt')) return 'Możesz napisać na: kontakt@dawidpersonal.pl';
-  return 'Jestem tu, aby pomóc! Opowiedz więcej.';
-}
-
-send.onclick=()=>{
-  const val=input.value.trim(); if(!val) return;
-  addMsg(val,'user'); input.value='';
-  setTimeout(()=>addMsg(aiReply(val),'ai'),500);
-};
-</script>
+      document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey) {
+          event.preventDefault()
+        }
+        if (event.keyCode == 123) {
+          event.preventDefault()
+        }
+      })
+    </script>
+    <script>
+      document.addEventListener("contextmenu", event => event.preventDefault())
+    </script>
 
 </body>
 </html>
