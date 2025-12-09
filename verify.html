@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weryfikacja</title>
+
+  <!-- hCaptcha -->
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at 30% 30%, #0f172a, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5e7eb;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.02);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .sub {
+      font-size: 14px;
+      opacity: 0.7;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #6366f155, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+      animation: pulse 3s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0%   { opacity: 0.4; transform: scale(1); }
+      100% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .userbox {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      word-break: break-all;
+      text-align: center;
+      color: #93c5fd;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .success {
+      color: #22c55e;
+      text-shadow: 0 0 10px #22c55e55;
+    }
+
+    .error {
+      color: #ef4444;
+      text-shadow: 0 0 10px #ef444455;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <div class="card">
+    <h1>🔐 Weryfikacja</h1>
+    <div class="sub">Potwierdź, że jesteś człowiekiem</div>
+
+    <div id="user" class="userbox">Ładowanie ID użytkownika...</div>
+
+    <div class="h-captcha"
+         data-sitekey="bd64b536-41b4-4542-b4ae-3798b322ce8"
+         data-callback="onVerify">
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("userid");
+
+    const userBox = document.getElementById("user");
+    const status = document.getElementById("status");
+
+    if (!userId) {
+      userBox.textContent = "❌ Brak ID użytkownika w linku";
+      userBox.classList.add("error");
+    } else {
+      userBox.textContent = `Użytkownik ID: ${userId}`;
+    }
+
+    function onVerify(token) {
+      status.textContent = "⌛ Sprawdzanie...";
+      status.className = "status";
+
+      fetch("https://your-server.com/verified", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: userId,
+          captchaToken: token
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          status.textContent = "✅ Zweryfikowano pomyślnie!";
+          status.classList.add("success");
+        } else {
+          status.textContent = "❌ Weryfikacja nie powiodła się.";
+          status.classList.add("error");
+        }
+      })
+      .catch(() => {
+        status.textContent = "❌ Problem z połączeniem.";
+        status.classList.add("error");
+      });
+    }
+  </script>
+</body>
+</html>
